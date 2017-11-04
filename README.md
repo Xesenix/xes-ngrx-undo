@@ -12,10 +12,16 @@ npm install xes-ngrx-undo
 ```typescript
 import { undoBehavior } from 'xes-ngrx-undo';
 
+// for AoT
+const undoBehaviorReducerDecorator = undoBehavior(100);
+export function undoBehaviorReducer(rootReducer: any) {
+  return undoBehaviorReducerDecorator(rootReducer);
+}
+
 @NgModule({
   imports: [
     // initialize buffor size on creation
-    StoreModule.provideStore(rootReducer, { metaReducers: [undoBehavior(100)] })
+    StoreModule.provideStore(rootReducer, { metaReducers: [undoBehaviorReducer] })
   ]
 })
 export class AppModule { }
